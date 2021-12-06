@@ -1,19 +1,16 @@
 var states;
 var fishes = [];
+var w = 750;
+var h = 750;
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(w, h);
   var current_state = 0;
-  states = [
-    [0, 1, 1, 2, 1, 0,0,0,0],
-    [1, 1, 2, 1, 0, 0,0,0,0],
-    [1,2,1,6,0,8,0,0,0],
-    [0,1,0,5,6,7,8,0,0],
-  ]
+  states = new fishCount([3,4,3,1,2], 80).getOutput()
 
 }
 var last_mils = 0;
 var last_state = 0;
-let timer = 1000;
+let timer = 100;
 function draw(){
   /*var circleX = random(width);
   var circleY = random(height);
@@ -25,7 +22,7 @@ function draw(){
   
   if(last_mils - millis() < timer)
   {
-
+    print(last_state)
     if(last_state < states.length)
       {
         //print(states[last_state])
@@ -34,7 +31,7 @@ function draw(){
           //print(states[last_state][j])
           for(var k = 0; k<states[last_state][j]; k++)
           {
-              fishes.push(new Fish(k, random(100,200),random(100,200)))
+              fishes.push(new Fish(k, random(0,h),random(0,w)))
           }
         }
         last_mils += timer*2
@@ -46,7 +43,14 @@ function draw(){
   //print(fishes)
   for(let fish in fishes)
   {
-    fishes[fish].move()
+    if(fishes[fish].alpha > 0)
+    {
+      fishes[fish].move()
+    }
+    else
+    {
+      delete fishes[fish]
+    }
   }
   
 }
